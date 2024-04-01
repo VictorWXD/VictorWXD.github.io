@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UON xx building history</title>
+<script>
+function changeImage() {
+  var image = document.getElementById('myImage');
+  if (image.src.match("firstImage")) {
+    image.src = "/VictorWXD.github.io/css/images/old1.jpg";
+  } else {
+    image.src = "/VictorWXD.github.io/css/images/now1.jpg";
+  }
+}
+</script>
+</head>
+<body>
+
+<h1>UON xx building history</h1>
+
+<img id="myImage" onclick="changeImage()" src="/VictorWXD.github.io/css/images/now1.jpg" style="width:100%;max-width:600px;cursor:pointer;">
+
+<p>这里是关于UON xx建筑的历史描述。</p>
+
+</body>
+</html>

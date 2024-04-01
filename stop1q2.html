@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UON Q&A</title>
+<style>
+.button.blue{
+  border:1px solid #1e7db9;
+  box-shadow: 0 1px 2px #8fcaee inset, 0 -1px 0 #497897 inset, 0 -2px 3px #8fcaee inset;
+  background: linear-gradient(top, #42a4e0, #2e88c0);
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+</style>
+<script>
+function checkAnswer(isCorrect) {
+  if (isCorrect) {
+    window.location.href = 'https://victorwxd.github.io/stop1intro'; // 替换为正确答案的页面URL
+  } else {
+    alert('Incorrect answer, please try again.');
+  }
+}
+</script>
+</head>
+<body>
+<h1>UON Q&A</h1>
+<p>I’m not a classroom, nor a dormitory hall, But without me, the campus wouldn’t be the same at all. The place is leafy. Where am I at Nottingham U, so serene, A spot where students relax and convene?</p>
+<div>
+  <button class="button blue" onclick="checkAnswer(false)">Jubliee</button>
+  <button class="button blue" onclick="checkAnswer(true)">Park</button>
+  <button class="button blue" onclick="checkAnswer(false)">Trent</button>
+  <button class="button blue" onclick="checkAnswer(false)">Hemsley</button>
+</div>
+</body>
+</html>
