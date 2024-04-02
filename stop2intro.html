@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UON history</title>
+<script>
+function changeImage() {
+  var image = document.getElementById('myImage');
+  if (image.src.match("firstImage")) {
+    image.src = "https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop2past.jpg";
+  } else {
+    image.src = "https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop2now.jpg";
+  }
+}
+</script>
+
+</head>
+<body>
+
+<h1>Portland Building history</h1>
+
+<img id="myImage" onclick="changeImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop2past.jpg" style="width:100%;max-width:600px;cursor:pointer;">
+<figcaption style="font-size: 12px;">Portland Building (Tap to switch between now and past)</figcaption>
+
+<p>
+    In a time when British universities were looking west for inspiration, Vice-Chancellor Bertrand Hallward came back from a tour of American campus universities wanting to provide a place where students could eat, study, debate, and buy books, all under one roof. The Portland Building was intended from the outset to be “not a students’ union building, it is a building built for the whole university of which the students’ union is a very important part”.
+    <br>The building was particularly welcomed because it afforded those living in private accommodation off campus, with the space and facilities to enjoy the full university experience (the communal spaces for socialising and studying), which up until then had only been provided by Halls of Residence.
+</p>
+
+</body>
+</html>
