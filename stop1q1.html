@@ -40,10 +40,19 @@
     height: auto;
   }
 </style>
+<script>
+  function checkAnswer(isCorrect) {
+    if (isCorrect) {
+      window.location.href = 'https://victorwxd.github.io/stop1intro';
+    } else {
+      alert('Incorrect answer, please try again.');
+    }
+  }
+</script>
 </head>
 <body>
   <h1>UON Q&A</h1>
-  <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/IMG_20230921_131628.jpg" style="width:100%;max-width:600px;">
+  <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/Shakespeare-Street-staff399x298.jpg" style="width:100%;max-width:600px;">
   <p>University College Nottingham was founded in which year?</p>
   <div>
     <button class="button blue" onclick="checkAnswer(false)">Year 1881</button>

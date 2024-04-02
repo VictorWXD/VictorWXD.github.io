@@ -3,17 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <title>UON Q&A</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 <style>
-.button.blue{
-  border:1px solid #1e7db9;
-  box-shadow: 0 1px 2px #8fcaee inset, 0 -1px 0 #497897 inset, 0 -2px 3px #8fcaee inset;
-  background: linear-gradient(top, #42a4e0, #2e88c0);
-  padding: 10px 20px;
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-}
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .button {
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  .blue {
+    background-color: #1e7db9;
+    color: white;
+  }
+  .blue:hover {
+    background-color: #155d82;
+  }
+  h1 {
+    color: #333;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 </style>
 <script>
 function checkAnswer(isCorrect) {
@@ -26,14 +51,14 @@ function checkAnswer(isCorrect) {
 </script>
 </head>
 <body>
-<h1>UON Q&A</h1>
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/IMG_20230921_131628.jpg" style="width:100%;max-width:600px;">
-<p>I’m not a classroom, nor a dormitory hall, But without me, the campus wouldn’t be the same at all. The place is leafy. Where am I at Nottingham U, so serene, A spot where people relax and convene?</p>
-<div>
-  <button class="button blue" onclick="checkAnswer(false)">Jubliee</button>
-  <button class="button blue" onclick="checkAnswer(true)">Park</button>
-  <button class="button blue" onclick="checkAnswer(false)">Trent</button>
-  <button class="button blue" onclick="checkAnswer(false)">Portland</button>
-</div>
+  <h1>UON Q&A</h1>
+  <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/IMG_20230921_131628.jpg" style="width:100%;max-width:600px;">
+  <p>I’m not a classroom, nor a dormitory hall, But without me, the campus wouldn’t be the same at all. The place is leafy. Where am I at Nottingham U, so serene, A spot where people relax and convene?</p>
+  <div>
+    <button class="button blue" onclick="checkAnswer(false)">Jubliee</button>
+    <button class="button blue" onclick="checkAnswer(true)">Park</button>
+    <button class="button blue" onclick="checkAnswer(false)">Trent</button>
+    <button class="button blue" onclick="checkAnswer(false)">Portland</button>
+  </div>
 </body>
 </html>
