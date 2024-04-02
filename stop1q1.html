@@ -3,37 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>UON Q&A</title>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 <style>
-.button.blue{
-  border:1px solid #1e7db9;
-  box-shadow: 0 1px 2px #8fcaee inset, 0 -1px 0 #497897 inset, 0 -2px 3px #8fcaee inset;
-  background: linear-gradient(top, #42a4e0, #2e88c0);
-  padding: 10px 20px;
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline-block;
-}
-</style>
-<script>
-function checkAnswer(isCorrect) {
-  if (isCorrect) {
-    window.location.href = 'https://victorwxd.github.io/stop1q2';
-  } else {
-    alert('Incorrect answer, please try again.');
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
   }
-}
-</script>
+  .button {
+    border: none;
+    border-radius: 5px;
+    padding: 15px 30px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  .blue {
+    background-color: #1e7db9;
+    color: white;
+  }
+  .blue:hover {
+    background-color: #155d82;
+  }
+  h1 {
+    color: #333;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
 </head>
 <body>
-<h1>UON Q&A</h1>
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/now1.jpg" alt="University of Nottingham">
-<p>The University College Nottingham's founded year?</p>
-<div>
-  <button class="button blue" onclick="checkAnswer(false)">Year 1881</button>
-  <button class="button blue" onclick="checkAnswer(false)">Year 1941</button>
-  <button class="button blue" onclick="checkAnswer(true)">Year 1877</button>
-  <button class="button blue" onclick="checkAnswer(false)">Year 1948</button>
-</div>
+  <h1>UON Q&A</h1>
+  <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/now1.jpg" alt="University of Nottingham">
+  <p>University College Nottingham was founded in which year?</p>
+  <div>
+    <button class="button blue" onclick="checkAnswer(false)">Year 1881</button>
+    <button class="button blue" onclick="checkAnswer(false)">Year 1941</button>
+    <button class="button blue" onclick="checkAnswer(true)">Year 1877</button>
+    <button class="button blue" onclick="checkAnswer(false)">Year 1948</button>
+  </div>
 </body>
 </html>
