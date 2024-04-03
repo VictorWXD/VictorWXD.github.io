@@ -14,8 +14,8 @@
     background-position: center;
   }
   .point {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     background-color: red;
     position: absolute;
     cursor: pointer;
@@ -71,7 +71,7 @@
   function drawLine(from, to) {
     var line = document.createElement('div');
     line.style.position = 'absolute';
-    line.style.borderTop = '2px solid blue';
+    line.style.borderTop = '3px solid blue';
     line.style.width = Math.sqrt(Math.pow(to.offsetLeft - from.offsetLeft, 2) +
                                  Math.pow(to.offsetTop - from.offsetTop, 2)) + 'px';
     line.style.left = from.offsetLeft + 'px';
