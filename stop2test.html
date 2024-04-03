@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>点连接示例</title>
+<style>
+  #drawingArea {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #000;
+    position: relative;
+  }
+  .point {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    position: absolute;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="drawingArea">
+  <div class="point" id="point1" style="top: 50px; left: 50px;"></div>
+  <div class="point" id="point2" style="top: 50px; left: 200px;"></div>
+  <div class="point" id="point3" style="top: 200px; left: 50px;"></div>
+  <div class="point" id="point4" style="top: 200px; left: 200px;"></div>
+</div>
+
+<script>
+  var drawingArea = document.getElementById('drawingArea');
+  var points = document.getElementsByClassName('point');
+  var lines = [];
+  var currentLine = null;
+
+  for (var i = 0; i < points.length; i++) {
+    points[i].addEventListener('mousedown', startDrawing);
+  }
+
+  function startDrawing(e) {
+    currentLine = { from: e.target, to: null };
+    for (var i = 0; i < points.length; i++) {
+      points[i].addEventListener('mouseenter', connectPoints);
+    }
+    document.addEventListener('mouseup', stopDrawing);
+  }
+
+  function connectPoints(e) {
+    if (!currentLine.to && e.target !== currentLine.from) {
+      currentLine.to = e.target;
+      drawLine(currentLine.from, currentLine.to);
+      lines.push(currentLine);
+      checkCompletion();
+    }
+  }
+
+  function stopDrawing() {
+    for (var i = 0; i < points.length; i++) {
+      points[i].removeEventListener('mouseenter', connectPoints);
+    }
+    document.removeEventListener('mouseup', stopDrawing);
+  }
+
+  function drawLine(from, to) {
+    var line = document.createElement('div');
+    line.style.position = 'absolute';
+    line.style.borderTop = '2px solid blue';
+    line.style.width = Math.sqrt(Math.pow(to.offsetLeft - from.offsetLeft, 2) +
+                                 Math.pow(to.offsetTop - from.offsetTop, 2)) + 'px';
+    line.style.left = from.offsetLeft + 'px';
+    line.style.top = from.offsetTop + 'px';
+    var angle = Math.atan2(to.offsetTop - from.offsetTop, to.offsetLeft - from.offsetLeft) * 180 / Math.PI;
+    line.style.transform = 'rotate(' + angle + 'deg)';
+    line.style.transformOrigin = '0 0';
+    drawingArea.appendChild(line);
+  }
+
+  function checkCompletion() {
+    if (lines.length === 4) {
+      window.location.href = '您的另一个网页URL';
+    }
+  }
+</script>
+
+</body>
+</html>
