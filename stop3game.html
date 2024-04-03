@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Puzzle Game</title>
+<style>
+  #puzzle-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: #fff;
+    border: 1px solid #000;
+    margin: 20px;
+  }
+  .puzzle-piece {
+    position: absolute;
+    border: 1px solid #000;
+    cursor: pointer;
+    background-size: cover;
+  }
+</style>
+</head>
+<body>
+
+<div id="puzzle-container"></div>
+
+<script>
+
+const pieceWidth = 100;
+const pieceHeight = 100;
+
+const correctPositions = [
+  {x: 0, y: 0}, {x: 100, y: 0}, {x: 200, y: 0},
+  {x: 0, y: 100}, {x: 100, y: 100}, {x: 200, y: 100},
+  {x: 0, y: 200}, {x: 100, y: 200}, {x: 200, y: 200}
+];
+let pieces = [];
+
+function initGame() {
+  const container = document.getElementById('puzzle-container');
+  for (let i = 0; i < correctPositions.length; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('puzzle-piece');
+    piece.style.width = pieceWidth + 'px';
+    piece.style.height = pieceHeight + 'px';
+    piece.style.backgroundImage = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
+    piece.style.backgroundPosition = `-${correctPositions[i].x}px -${correctPositions[i].y}px`;
+    piece.style.top = `${Math.random() * 400}px`;
+    piece.style.left = `${Math.random() * 400}px`;
+    piece.setAttribute('data-correct-x', correctPositions[i].x);
+    piece.setAttribute('data-correct-y', correctPositions[i].y);
+    container.appendChild(piece);
+    pieces.push(piece);
+    piece.addEventListener('mousedown', startDrag);
+  }
+}
+
+function startDrag(e) {
+  const piece = e.target;
+  const offsetX = e.clientX - piece.getBoundingClientRect().left;
+  const offsetY = e.clientY - piece.getBoundingClientRect().top;
+  piece.style.zIndex = 1000;
+
+  function moveAt(clientX, clientY) {
+    piece.style.left = clientX - offsetX + 'px';
+    piece.style.top = clientY - offsetY + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.clientX, event.clientY);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  piece.onmouseup = function() {
+    document.removeEventListener('mousemove', onMouseMove);
+    piece.onmouseup = null;
+    piece.style.zIndex = '';
+    checkPosition(piece);
+  };
+}
+
+function checkPosition(piece) {
+  const currentX = piece.getBoundingClientRect().left - document.getElementById('puzzle-container').getBoundingClientRect().left;
+  const currentY = piece.getBoundingClientRect().top - document.getElementById('puzzle-container').getBoundingClientRect().top;
+  const correctX = parseInt(piece.getAttribute('data-correct-x'));
+  const correctY = parseInt(piece.getAttribute('data-correct-y'));
+  if (Math.abs(currentX - correctX) < 10 && Math.abs(currentY - correctY) < 10) {
+    piece.style.left = correctX + 'px';
+    piece.style.top = correctY + 'px';
+    piece.removeEventListener('mousedown', startDrag);
+    checkWin();
+  }
+}
+
+function checkWin() {
+  const isCompleted = pieces.every(piece => {
+    const currentX = parseInt(piece.style.left, 10);
+    const currentY = parseInt(piece.style.top, 10);
+    const correctX = parseInt(piece.getAttribute('data-correct-x'));
+    const correctY = parseInt(piece.getAttribute('data-correct-y'));
+    return currentX === correctX && currentY === correctY;
+  });
+  if (isCompleted) {
+    window.location.href = 'https://victorwxd.github.io/stop3intro';
+  }
+}
+
+initGame();
+</script>
+
+</body>
+</html>
