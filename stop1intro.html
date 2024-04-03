@@ -3,25 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <title>UON history</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  header {
+    background: #50b3a2;
+    color: white;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #e8491d 3px solid;
+  }
+  header a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+  header ul {
+    padding: 0;
+    list-style: none;
+  }
+  header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+  }
+  header #branding {
+    float: left;
+  }
+  header #branding h1 {
+    margin: 0;
+  }
+  header nav {
+    float: right;
+    margin-top: 10px;
+  }
+  header .highlight, header .current a {
+    color: #e8491d;
+    font-weight: bold;
+  }
+  header a:hover {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  figure {
+    border: 1px solid #ddd;
+    padding: 4px;
+    margin: auto;
+  }
+  figcaption {
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
 
-<h1>University College History</h1>
+<header>
+  <div class="container">
+    <div id="branding">
+      <h1><span class="highlight">University</span> College History</h1>
+    </div>
+    <nav>
+      <ul>
+        <li class="current"><a href="#history">History</a></li>
+        <li><a href="#campus">Campus</a></li>
+        <li><a href="#charter">Charter</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop1now.jpg" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">The residents played happily with their children on the grass, 2024.</figcaption>
+<section class="container">
+  <figure>
+    <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop1now.jpg" style="width:100%;max-width:600px;">
+    <figcaption>The residents played happily with their children on the grass, 2024.</figcaption>
+  </figure>
 
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/University-Park-campus-opening.jpg" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">Official opening of University Park campus, 10th July 1928.</figcaption>
-<p>
-  University College Nottingham was founded in 1877.
-  <br>The College opened in 1881 with a staff of four professors, six lecturers and twelve teachers and a student body of 381 day students, 623 evening students and 346 members of government science classes.  Classes were offered in the arts, humanities and sciences with lecturers expected to cover more than one subject, rather than the specialism known today. From its beginning the aim of the College was to bring education to all those who desired it, regardless of class, sex or financial means.
-  <br>Work began on the new University College buildings (the present University Park campus) in 1922 on land donated by Sir Jesse Boot. The new college campus was officially opened on 10th July 1928 by King George V and Queen Mary. From this point on the majority of departments were housed on the new campus although some, such as engineering, remained at Shakespeare Street until 1946.
-  <br>It was in 1948 that Nottingham University College was finally granted its university charter, 71 years after it was founded. The College was renamed the University of Nottingham and was able to confer its own degrees.
-</p>
+  <figure>
+    <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/University-Park-campus-opening.jpg" style="width:100%;max-width:600px;">
+    <figcaption>Official opening of University Park campus, 10th July 1928.</figcaption>
+  </figure>
 
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop2hint.jpg" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">Next location hint</figcaption>
+  <article id="history">
+    <h2>Our Beginnings</h2>
+    <p>
+      University College Nottingham was founded in 1877. The College opened in 1881 with a staff of four professors, six lecturers and twelve teachers and a student body of 381 day students, 623 evening students and 346 members of government science classes. Classes were offered in the arts, humanities and sciences with lecturers expected to cover more than one subject, rather than the specialism known today. From its beginning the aim of the College was to bring education to all those who desired it, regardless of class, sex or financial means.
+    </p>
+  </article>
+
+  <article id="campus">
+    <h2>The New Campus</h2>
+    <p>
+      Work began on the new University College buildings (the present University Park campus) in 1922 on land donated by Sir Jesse Boot. The new college campus was officially opened on 10th July 1928 by King George V and Queen Mary. From this point on the majority of departments were housed on the new campus although some, such as engineering, remained at Shakespeare Street until 1946.
+    </p>
+  </article>
+
+  <article id="charter">
+    <h2>University Charter</h2>
+    <p>
+      It was in 1948 that Nottingham University College was finally granted its university charter, 71 years after it was founded. The College was renamed the University of Nottingham and was able to confer its own degrees.
+    </p>
+  </article>
+
+  <figure>
+    <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop2hint.jpg" style="width:100%;max-width:600px;">
+    <figcaption>Next location hint</figcaption>
+  </figure>
+</section>
 
 </body>
 </html>
