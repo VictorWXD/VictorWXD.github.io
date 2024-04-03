@@ -18,11 +18,15 @@
   var points = [{x: 50, y: 50}, {x: 150, y: 100}, {x: 100, y: 200}];
   var isDragging = false;
   var dragPointIndex = -1;
+  var startPointIndex = -1;
+  var gameStarted = false;
   var img = new Image();
   img.onload = function() {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    drawPoints();
-    connectPoints(); 
+    drawPoints(); // 先绘制点
+    if (gameStarted) { // 检查游戏是否开始
+      connectPoints(); // 如果游戏已开始，则连接点
+    }
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); 
   };
   img.src = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
 
@@ -60,8 +64,7 @@
     dragPointIndex = checkMouseOnPoint(x, y);
     if (startPointIndex !== -1) {
       isDrawing = true;
-      ctx.beginPath();
-      ctx.moveTo(points[startPointIndex].x, points[startPointIndex].y);
+      startPointIndex = dragPointIndex;
     }
   };
 
