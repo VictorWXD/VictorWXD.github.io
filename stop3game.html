@@ -42,10 +42,15 @@ function createPieces() {
     var piece = document.createElement('div');
     piece.classList.add('puzzle-piece');
     piece.style.backgroundPosition = '-' + (i % 3 * 100) + 'px -' + (Math.floor(i / 3) * 100) + 'px';
+    piece.style.left = (i % 3 * 100) + 'px';
+    piece.style.top = (Math.floor(i / 3) * 100) + 'px';
     piece.setAttribute('data-index', i);
     container.appendChild(piece);
     pieces.push(piece);
   }
+  pieces.forEach(function(piece) {
+    piece.addEventListener('mousedown', onPieceMouseDown);
+  });
 }
 
 function checkPosition(piece, index) {
@@ -84,9 +89,6 @@ function onPieceMouseDown(e) {
   document.addEventListener('mouseup', dropPiece);
 }
 
-pieces.forEach(function(piece) {
-  piece.addEventListener('mousedown', onPieceMouseDown);
-});
 
 window.onload = createPieces;
 </script>
