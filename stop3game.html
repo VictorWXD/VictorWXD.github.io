@@ -82,8 +82,9 @@ function onPieceMouseDown(e) {
         y = e.clientY - selectedPiece.getBoundingClientRect().top;
 
     function movePiece(e) {
-    selectedPiece.style.left = e.clientX - x + 'px';
-    selectedPiece.style.top = e.clientY - y + 'px';
+    var rect = selectedPiece.getBoundingClientRect();
+    selectedPiece.style.left = (e.clientX - rect.width / 2) + 'px';
+    selectedPiece.style.top = (e.clientY - rect.height / 2) + 'px';
     }
 
     function dropPiece(e) {
