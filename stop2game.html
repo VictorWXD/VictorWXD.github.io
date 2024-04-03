@@ -18,6 +18,11 @@
   var points = [{x: 50, y: 50}, {x: 150, y: 100}, {x: 100, y: 200}];
   var isDragging = false;
   var dragPointIndex = -1;
+  var img = new Image();
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 当图像加载完成后，在画布上绘制它
+  };
+  img.src = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
 
   function drawPoints() {
     for (var i = 0; i < points.length; i++) {
