@@ -38,7 +38,7 @@ var correctPositions = 0,
 
 
 function createPieces() {
-var positions = [];
+    var positions = [];
     while (positions.length < 9) {
         var randomPos = Math.floor(Math.random() * 9);
     if (positions.indexOf(randomPos) === -1) {
@@ -48,10 +48,10 @@ var positions = [];
     for (var i = 0; i < 9; i++) {
         var piece = document.createElement('div');
         piece.classList.add('puzzle-piece');
-        piece.style.backgroundPosition = '-' + (i % 3 * 100) + 'px -' + (Math.floor(i / 3) * 100) + 'px';
+        piece.style.backgroundPosition = '-' + (positions[i] % 3 * 100) + 'px -' + (Math.floor(positions[i] / 3) * 100) + 'px';
         piece.style.left = (i % 3 * 100) + 'px';
     piece.style.top = (Math.floor(i / 3) * 100) + 'px';
-    piece.setAttribute('data-index', i);
+    piece.setAttribute('data-index', positions[i]);
     container.appendChild(piece);
     pieces.push(piece);
     }
