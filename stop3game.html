@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <title>A puzzle game of UON logo</title>
 <style>
-  #puzzle-container {
+#puzzle-container {
     width: 300px;
     height: 300px;
     position: relative;
     background-color: white;
     border: 1px solid #000;
-  }
-  .puzzle-piece {
+}
+.puzzle-piece {
     width: 100px;
     height: 100px;
     position: absolute;
     background-image: url('https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg');
     background-size: 300px 300px;
     cursor: pointer;
-  }
+}
 </style>
 </head>
 
@@ -38,19 +38,27 @@ var correctPositions = 0,
 
 
 function createPieces() {
-  for (var i = 0; i < 9; i++) {
-    var piece = document.createElement('div');
-    piece.classList.add('puzzle-piece');
-    piece.style.backgroundPosition = '-' + (i % 3 * 100) + 'px -' + (Math.floor(i / 3) * 100) + 'px';
-    piece.style.left = (i % 3 * 100) + 'px';
-    piece.style.top = (Math.floor(i / 3) * 100) + 'px';
-    piece.setAttribute('data-index', i);
-    container.appendChild(piece);
-    pieces.push(piece);
-  }
-  pieces.forEach(function(piece) {
-    piece.addEventListener('mousedown', onPieceMouseDown);
-  });
+    var positions = [];
+    while (positions.length < 9) {
+        var randomPos = Math.floor(Math.random() * 9);
+        if (positions.indexOf(randomPos) === -1) {
+            positions.push(randomPos);
+        }
+    }
+
+    for (var i = 0; i < 9; i++) {
+        var piece = document.createElement('div');
+        piece.classList.add('puzzle-piece');
+        piece.style.backgroundPosition = '-' + (positions[i] % 3 * 100) + 'px -' + (Math.floor(positions[i] / 3) * 100) + 'px';
+        piece.style.left = (i % 3 * 100) + 'px';
+        piece.style.top = (Math.floor(i / 3) * 100) + 'px';
+        piece.setAttribute('data-index', positions[i]);
+        container.appendChild(piece);
+        pieces.push(piece);
+    }
+    pieces.forEach(function(piece) {
+        piece.addEventListener('mousedown', onPieceMouseDown);
+    });
 }
 
 function checkPosition(piece, index) {
@@ -64,29 +72,29 @@ function checkPosition(piece, index) {
     piece.removeEventListener('mousedown', onPieceMouseDown);
     correctPositions++;
     if (correctPositions === 9) {
-      window.location.href = redirectUrl;
+        window.location.href = redirectUrl;
+        }
     }
-  }
 }
 
 function onPieceMouseDown(e) {
-  var selectedPiece = this;
-  var x = e.clientX - selectedPiece.getBoundingClientRect().left,
-      y = e.clientY - selectedPiece.getBoundingClientRect().top;
+    var selectedPiece = this;
+    var x = e.clientX - selectedPiece.getBoundingClientRect().left,
+        y = e.clientY - selectedPiece.getBoundingClientRect().top;
 
-  function movePiece(e) {
+    function movePiece(e) {
     selectedPiece.style.left = e.clientX - x + 'px';
     selectedPiece.style.top = e.clientY - y + 'px';
-  }
+    }
 
-  function dropPiece(e) {
+    function dropPiece(e) {
     document.removeEventListener('mousemove', movePiece);
     document.removeEventListener('mouseup', dropPiece);
     checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
-  }
+    }
 
-  document.addEventListener('mousemove', movePiece);
-  document.addEventListener('mouseup', dropPiece);
+    document.addEventListener('mousemove', movePiece);
+    document.addEventListener('mouseup', dropPiece);
 }
 
 
