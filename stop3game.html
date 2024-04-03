@@ -12,11 +12,11 @@
     border: 1px solid #000;
   }
   .puzzle-piece {
-    width: 100px; /* 图片总宽度的三分之一 */
-    height: 100px; /* 图片总高度的三分之一 */
+    width: 100px;
+    height: 100px;
     position: absolute;
-    background-image: url('path-to-your-image.jpg'); /* 替换为您的图片路径 */
-    background-size: 300px 300px; /* 调整为图片的总尺寸 */
+    background-image: url('https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg');
+    background-size: 300px 300px;
     cursor: pointer;
   }
 </style>
@@ -31,11 +31,11 @@
 <script>
 var pieces = [],
     container = document.getElementById('puzzle-container'),
-    imgUrl = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg'; // 替换为您的图片路径
+    imgUrl = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
 var correctPositions = 0,
-    redirectUrl = 'https://victorwxd.github.io/stop3intro'; // 替换为您想要跳转的网址
+    redirectUrl = 'https://victorwxd.github.io/stop3intro';
 
-// 生成碎片的函数
+
 function createPieces() {
   for (var i = 0; i < 9; i++) {
     var piece = document.createElement('div');
@@ -83,12 +83,10 @@ function onPieceMouseDown(e) {
   document.addEventListener('mouseup', dropPiece);
 }
 
-// 给每个碎片添加mousedown事件监听
 pieces.forEach(function(piece) {
   piece.addEventListener('mousedown', onPieceMouseDown);
 });
 
-// 页面加载完成后，生成碎片
 window.onload = createPieces;
 </script>
 
