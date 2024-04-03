@@ -51,25 +51,34 @@
     var x = e.clientX - rect.left;
     var y = e.clientY - rect.top;
     dragPointIndex = checkMouseOnPoint(x, y);
-    if (dragPointIndex !== -1) {
-      isDragging = true;
+    if (startPointIndex !== -1) {
+      isDrawing = true;
+      ctx.beginPath();
+      ctx.moveTo(points[startPointIndex].x, points[startPointIndex].y);
     }
   };
 
   canvas.onmousemove = function(e) {
-    if (isDragging) {
+    if (isDrawing) {
       var rect = canvas.getBoundingClientRect();
       var x = e.clientX - rect.left;
       var y = e.clientY - rect.top;
-      points[dragPointIndex] = {x: x, y: y};
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawPoints();
-      connectPoints();
+      ctx.lineTo(x, y);
+      ctx.stroke();
     }
   };
 
   canvas.onmouseup = function(e) {
     isDragging = false;
+    var rect = canvas.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var endPointIndex = checkMouseOnPoint(x, y);
+    if (endPointIndex !== -1 && startPointIndex !== endPointIndex) {
+      ctx.lineTo(points[endPointIndex].x, points[endPointIndex].y);
+      ctx.stroke();
+      startPointIndex = endPointIndex;
+    }
     if (isOneStrokeComplete()) {
       window.location.href = 'https://victorwxd.github.io/stop2intro';
     }
