@@ -82,18 +82,14 @@ function onPieceMouseDown(e) {
         y = e.clientY - selectedPiece.getBoundingClientRect().top;
 
     function movePiece(e) {
-    var mouseX = e.clientX;
-    var mouseY = e.clientY;
-    var halfWidth = selectedPiece.offsetWidth / 2;
-    var halfHeight = selectedPiece.offsetHeight / 2;
-    selectedPiece.style.left = (mouseX - halfWidth) + 'px';
-    selectedPiece.style.top = (mouseY - halfHeight) + 'px';
+        selectedPiece.style.left = (e.clientX - offsetX) + 'px';
+        selectedPiece.style.top = (e.clientY - offsetY) + 'px';
     }
 
     function dropPiece(e) {
-    document.removeEventListener('mousemove', movePiece);
-    document.removeEventListener('mouseup', dropPiece);
-    checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
+        document.removeEventListener('mousemove', movePiece);
+        document.removeEventListener('mouseup', dropPiece);
+        checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
     }
 
     document.addEventListener('mousemove', movePiece);
