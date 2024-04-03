@@ -1,128 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>A stroke of the UON logo</title>
 <style>
-  canvas {
+  #drawingArea {
+    width: 300px;
+    height: 300px;
     border: 1px solid #000;
+    position: relative;
+    background-image: 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
+    background-size: cover;
+    background-position: center;
+  }
+  .point {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    position: absolute;
+    cursor: pointer;
+    border-radius: 50%;
   }
 </style>
 </head>
 <body>
 
-<canvas id="gameCanvas" width="400" height="400"></canvas>
+<div id="drawingArea">
+  <div class="point" id="point1" style="top: 50px; left: 50px;"></div>
+  <div class="point" id="point2" style="top: 50px; left: 200px;"></div>
+  <div class="point" id="point3" style="top: 200px; left: 50px;"></div>
+  <div class="point" id="point4" style="top: 200px; left: 200px;"></div>
+</div>
 
 <script>
-  var canvas = document.getElementById('gameCanvas');
-  var ctx = canvas.getContext('2d');
-  var points = [{x: 50, y: 50}, {x: 150, y: 100}, {x: 100, y: 200}];
-  var isDragging = false;
-  var dragPointIndex = -1;
-  var startPointIndex = -1;
-  var gameStarted = false;
-  var img = new Image();
-  img.onload = function() {
-    drawPoints(); // 先绘制点
-    if (gameStarted) { // 检查游戏是否开始
-      connectPoints(); // 如果游戏已开始，则连接点
-    }
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); 
-  };
-  img.src = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
+  var drawingArea = document.getElementById('drawingArea');
+  var points = document.getElementsByClassName('point');
+  var lines = [];
+  var currentLine = null;
 
-  function drawPoints() {
+  for (var i = 0; i < points.length; i++) {
+    points[i].addEventListener('mousedown', startDrawing);
+  }
+
+  function startDrawing(e) {
+    currentLine = { from: e.target, to: null };
     for (var i = 0; i < points.length; i++) {
-      ctx.beginPath();
-      ctx.arc(points[i].x, points[i].y, 5, 0, Math.PI * 2);
-      ctx.fill();
+      points[i].addEventListener('mouseenter', connectPoints);
+    }
+    document.addEventListener('mouseup', stopDrawing);
+  }
+
+  function connectPoints(e) {
+    if (!currentLine.to && e.target !== currentLine.from) {
+      currentLine.to = e.target;
+      drawLine(currentLine.from, currentLine.to);
+      lines.push(currentLine);
+      checkCompletion();
     }
   }
 
-  function connectPoints() {
-    ctx.beginPath();
+  function stopDrawing() {
     for (var i = 0; i < points.length; i++) {
-      ctx.lineTo(points[i].x, points[i].y);
+      points[i].removeEventListener('mouseenter', connectPoints);
     }
-    ctx.stroke();
+    document.removeEventListener('mouseup', stopDrawing);
   }
 
-  function checkMouseOnPoint(x, y) {
-    for (var i = 0; i < points.length; i++) {
-      var dx = points[i].x - x;
-      var dy = points[i].y - y;
-      if (dx * dx + dy * dy < 25) {
-        return i;
-      }
-    }
-    return -1;
+  function drawLine(from, to) {
+    var line = document.createElement('div');
+    line.style.position = 'absolute';
+    line.style.borderTop = '2px solid blue';
+    line.style.width = Math.sqrt(Math.pow(to.offsetLeft - from.offsetLeft, 2) +
+                                 Math.pow(to.offsetTop - from.offsetTop, 2)) + 'px';
+    line.style.left = from.offsetLeft + 'px';
+    line.style.top = from.offsetTop + 'px';
+    var angle = Math.atan2(to.offsetTop - from.offsetTop, to.offsetLeft - from.offsetLeft) * 180 / Math.PI;
+    line.style.transform = 'rotate(' + angle + 'deg)';
+    line.style.transformOrigin = '0 0';
+    drawingArea.appendChild(line);
   }
 
-  canvas.onmousedown = function(e) {
-    var rect = canvas.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    dragPointIndex = checkMouseOnPoint(x, y);
-    if (startPointIndex !== -1) {
-      isDrawing = true;
-      startPointIndex = dragPointIndex;
-    }
-  };
-
-  canvas.onmousemove = function(e) {
-    if (isDrawing) {
-      var rect = canvas.getBoundingClientRect();
-      var x = e.clientX - rect.left;
-      var y = e.clientY - rect.top;
-      ctx.lineTo(x, y);
-      ctx.stroke();
-    }
-  };
-
-  canvas.onmouseup = function(e) {
-    isDragging = false;
-    var rect = canvas.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    var endPointIndex = checkMouseOnPoint(x, y);
-    if (endPointIndex !== -1 && startPointIndex !== endPointIndex) {
-      ctx.lineTo(points[endPointIndex].x, points[endPointIndex].y);
-      ctx.stroke();
-      startPointIndex = endPointIndex;
-    }
-    if (isOneStrokeComplete()) {
+  function checkCompletion() {
+    if (lines.length === 4) {
       window.location.href = 'https://victorwxd.github.io/stop2intro';
     }
-  };
-
-
-  function isOneStrokeComplete() {
-  var visited = new Array(points.length).fill(false);
-  var totalVisited = 0;
-
-  visited[0] = true;
-  totalVisited++;
-
-  for (var i = 1; i < points.length; i++) {
-    if (!visited[i] && isNextPoint(points[i-1], points[i])) {
-      visited[i] = true;
-      totalVisited++;
-    }
   }
-
-  return totalVisited === points.length;
-}
-
-function isNextPoint(a, b) {
-  var dx = a.x - b.x;
-  var dy = a.y - b.y;
-  var distance = Math.sqrt(dx * dx + dy * dy);
-
-  var threshold = 10; 
-  return distance < threshold;
-}
-
-  drawPoints();
-  connectPoints();
 </script>
 
 </body>
