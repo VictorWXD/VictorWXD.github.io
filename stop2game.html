@@ -20,7 +20,9 @@
   var dragPointIndex = -1;
   var img = new Image();
   img.onload = function() {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 当图像加载完成后，在画布上绘制它
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    drawPoints();
+    connectPoints(); 
   };
   img.src = 'https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/logo.jpg';
 
