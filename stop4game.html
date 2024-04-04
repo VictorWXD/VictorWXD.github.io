@@ -9,7 +9,7 @@
     height: 300px;
     position: relative;
     background-color: #f0f0f0;
-    border: 5px solid #000;
+    border: 3px solid #000;
   }
   .block {
     position: absolute;
@@ -41,6 +41,8 @@
 </head>
 <body>
 
+<h1>Please drag the blue block to exit</h1>
+
 <div id="gameArea">
   <div id="exit"></div>
   <div id="verticalBlock" class="block"></div>
@@ -55,6 +57,7 @@
 const blocks = document.querySelectorAll('.block');
 const gameArea = document.getElementById('gameArea').getBoundingClientRect();
 const exit = document.getElementById('exit').getBoundingClientRect();
+const borderWidth = 3;
 
 function isColliding(block1, block2) {
   const rect1 = block1.getBoundingClientRect();
@@ -71,17 +74,17 @@ blocks.forEach(function(block) {
     let shiftY = event.clientY - block.getBoundingClientRect().top;
 
     function moveAt(pageX, pageY) {
-      let newLeft = pageX - shiftX;
-      let newTop = pageY - shiftY;
+      let newLeft = pageX - shiftX - gameArea.left - borderWidth;
+      let newTop = pageY - shiftY - gameArea.top - borderWidth;
 
       if (block.classList.contains('horizontalBlock')) {
-        if (newLeft >= gameArea.left && newLeft <= gameArea.right - block.offsetWidth) {
+        if (newLeft >= 0 && newLeft <= gameArea.width - block.offsetWidth - borderWidth * 2) {
           block.style.left = newLeft + 'px';
         }
       }
 
       if (block.id === 'verticalBlock') {
-        if (newTop >= gameArea.top && newTop <= gameArea.bottom - block.offsetHeight) {
+        if (newTop >= 0 && newTop <= gameArea.height - block.offsetHeight - borderWidth * 2) {
           block.style.top = newTop + 'px';
         }
       }
