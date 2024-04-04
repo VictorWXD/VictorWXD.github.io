@@ -2,7 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>UON history</title>
+<title>Trent Building History</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  header {
+    background: #333;
+    color: white;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #0946ed 3px solid;
+  }
+  header a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+  header ul {
+    padding: 0;
+    list-style: none;
+  }
+  header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+  }
+  header #branding {
+    float: left;
+  }
+  header #branding h1 {
+    margin: 0;
+  }
+  header nav {
+    float: right;
+    margin-top: 10px;
+  }
+  header .highlight, header .current a {
+    color: #0946ed;
+    font-weight: bold;
+  }
+  header a:hover {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  figure {
+    border: 1px solid #ddd;
+    padding: 4px;
+    margin: auto;
+  }
+  figcaption {
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
 <script>
 function changeImage() {
   var image = document.getElementById('myImage');
@@ -13,26 +76,42 @@ function changeImage() {
   }
 }
 </script>
-
 </head>
 <body>
 
-<h1>Trent Building history</h1>
+<header>
+  <div class="container">
+    <div id="branding">
+      <h1><span class="highlight">Trent</span> Building History</h1>
+    </div>
+  </div>
+</header>
 
-<img id="myImage" onclick="changeImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop3now.jpg" style="width:100%;max-width:600px;cursor:pointer;">
-<figcaption style="font-size: 12px;">The Trent Building (Tap to switch between now and past)</figcaption>
+<section class="container">
+  <figure>
+    <img id="myImage" onclick="changeImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop3now.jpg" style="width:100%;max-width:600px;cursor:pointer;">
+    <figcaption>The Trent Building (Tap to switch between now and past)</figcaption>
+  </figure>
 
-<p>
-    In 1922 there was no 'University of Nottingham'. Instead there was 'Nottingham University College', which was opened by then Prime Minister, W E Gladstone in the city centre in 1881. After the First World War the college soon outgrew its original building and it was thanks to a donation of 35 acres of land at Highfields Park by Sir Jesse Boot that the university you know today exists.
-    <br>And with that the foundation of the University of Nottingham as you know it today had begun. Following a period of war, pandemic and political instability, the laying of the foundation stone must have seemed a poignant expression of hope and ambition in the future.
-    <br>What may also surprise you is that the very same stone which you see pictured back in 1922 is still in situ at the Trent Building today - perhaps for many of you without so much as a passing glance!
-    <br>You should be right there, head to the main entrance of the Trent Building in the courtyard and look to your right. A piece of history.
-</p>
-<img src="https://www.nottingham.ac.uk/Alumni/images/News/Laying-the-trent-building-foundation/Foundation-stone-today.x044ae5cf.jpeg" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">Foundation stone</figcaption>
+  <article>
+    <p>
+        In 1922 there was no 'University of Nottingham'. Instead there was 'Nottingham University College', which was opened by then Prime Minister, W E Gladstone in the city centre in 1881. After the First World War the college soon outgrew its original building and it was thanks to a donation of 35 acres of land at Highfields Park by Sir Jesse Boot that the university you know today exists.
+        <br>And with that the foundation of the University of Nottingham as you know it today had begun. Following a period of war, pandemic and political instability, the laying of the foundation stone must have seemed a poignant expression of hope and ambition in the future.
+        <br>What may also surprise you is that the very same stone which you see pictured back in 1922 is still in situ at the Trent Building today - perhaps for many of you without so much as a passing glance!
+        <br>You should be right there, head to the main entrance of the Trent Building in the courtyard and look to your right. A piece of history.
+    </p>
+  </article>
 
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop4hint.jpg" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">Next location hint</figcaption>
+  <figure>
+    <img src="https://www.nottingham.ac.uk/Alumni/images/News/Laying-the-trent-building-foundation/Foundation-stone-today.x044ae5cf.jpeg" style="width:100%;max-width:600px;">
+    <figcaption>Foundation stone</figcaption>
+  </figure>
+
+  <figure>
+    <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop4hint.jpg" style="width:100%;max-width:600px;">
+    <figcaption>Next location hint</figcaption>
+  </figure>
+</section>
 
 </body>
 </html>

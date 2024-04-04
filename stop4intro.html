@@ -2,7 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>UON history</title>
+<title>Trent Building History</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  header {
+    background: #333;
+    color: white;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #0946ed 3px solid;
+  }
+  header a {
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+  header ul {
+    padding: 0;
+    list-style: none;
+  }
+  header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+  }
+  header #branding {
+    float: left;
+  }
+  header #branding h1 {
+    margin: 0;
+  }
+  header nav {
+    float: right;
+    margin-top: 10px;
+  }
+  header .highlight, header .current a {
+    color: #0946ed;
+    font-weight: bold;
+  }
+  header a:hover {
+    color: #ffffff;
+    font-weight: bold;
+  }
+  figure {
+    border: 1px solid #ddd;
+    padding: 4px;
+    margin: auto;
+  }
+  figcaption {
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
 <script>
 function changeImage() {
   var image = document.getElementById('myImage');
@@ -22,33 +85,53 @@ function changeCouncilRoomImage() {
   }
 }
 </script>
-
 </head>
 <body>
 
-<h1>Trent Building history</h1>
+<header>
+  <div class="container">
+    <div id="branding">
+      <h1><span class="highlight">Trent</span> Building History</h1>
+    </div>
+  </div>
+</header>
 
-<img id="myImage" onclick="changeImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop4now.jpg" style="width:100%;max-width:600px;cursor:pointer;">
-<figcaption style="font-size: 12px;">The Trent Building (Tap to switch between now and past)</figcaption>
+<section class="container">
+  <figure>
+    <img id="myImage" onclick="changeImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/stop4now.jpg" style="width:100%;max-width:600px;cursor:pointer;">
+    <figcaption>The Trent Building (Tap to switch between now and past)</figcaption>
+  </figure>
 
-<p>
-    The Trent Building serves as one of the main administrative buildings of the University of Nottingham. It also contains academic facilities, principally for the arts and social sciences.
-    <br>The architecture was designed by Percy Richard Morley, who also designed the London School of Hygiene and Tropical Medicine. However his best known work was for the Boots the Chemist stores and, most importantly, the Trent Building and the layout of the Nottingham University Campus, which influenced design at other English universities.
-</p>
+  <article>
+    <p>
+        The Trent Building serves as one of the main administrative buildings of the University of Nottingham. It also contains academic facilities, principally for the arts and social sciences.
+        <br>The architecture was designed by Percy Richard Morley, who also designed the London School of Hygiene and Tropical Medicine. However his best known work was for the Boots the Chemist stores and, most importantly, the Trent Building and the layout of the Nottingham University Campus, which influenced design at other English universities.
+    </p>
+  </article>
 
-<img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/great hall.png" style="width:100%;max-width:600px;">
-<figcaption style="font-size: 12px;">The Great Hall</figcaption>
+  <figure>
+    <img src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/great hall.png" style="width:100%;max-width:600px;">
+    <figcaption>The Great Hall</figcaption>
+  </figure>
 
-<p>
-    The Great Hall in the west wing, which has marble clad, with panelled cross beam ceiling and an organ on one end of the room.
-    <br>First opened in 1928, Trent Great Hall has been used by the university for many official functions. It has been used as a lecture hall, with special lectures having been given by both Mahatma Gandhi and Albert Einstein. However, nowadays, it is mainly used by societies for performances and other events.
-</p>
+  <article>
+    <p>
+        The Great Hall in the west wing, which has marble clad, with panelled cross beam ceiling and an organ on one end of the room.
+        <br>First opened in 1928, Trent Great Hall has been used by the university for many official functions. It has been used as a lecture hall, with special lectures having been given by both Mahatma Gandhi and Albert Einstein. However, nowadays, it is mainly used by societies for performances and other events.
+    </p>
+  </article>
 
-<img id="councilRoomImage" onclick="changeCouncilRoomImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/council room now.png" style="width:100%;max-width:600px;;cursor:pointer;">
-<figcaption style="font-size: 12px;">The council room (Tap to switch between now and past)</figcaption>
-<p>
-    The council room, past and now, with many original features still remaining.
-</p>
+  <figure>
+    <img id="councilRoomImage" onclick="changeCouncilRoomImage()" src="https://raw.githubusercontent.com/VictorWXD/VictorWXD.github.io/main/css/images/council room now.png" style="width:100%;max-width:600px;cursor:pointer;">
+    <figcaption>The council room (Tap to switch between now and past)</figcaption>
+  </figure>
+
+  <article>
+    <p>
+        The council room, past and now, with many original features still remaining.
+    </p>
+  </article>
+</section>
 
 </body>
 </html>
