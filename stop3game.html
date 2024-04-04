@@ -19,6 +19,9 @@
     background-size: 300px 300px;
     cursor: pointer;
 }
+.correct-position {
+    border: 2px solid green;
+}
 </style>
 </head>
 
@@ -66,10 +69,10 @@ function checkPosition(piece, index) {
     var currentX = parseInt(piece.style.left, 10),
         currentY = parseInt(piece.style.top, 10);
     if (Math.abs(currentX - correctX) <= 10 && Math.abs(currentY - correctY) <= 10) {
-    piece.style.left = correctX + 'px';
-    piece.style.top = correctY + 'px';
-    piece.removeEventListener('mousedown', onPieceMouseDown);
-    correctPositions++;
+        piece.style.left = correctX + 'px';
+        piece.style.top = correctY + 'px';
+        piece.classList.add('correct-position');
+        correctPositions++;
     if (correctPositions === 9) {
         window.location.href = redirectUrl;
         }
