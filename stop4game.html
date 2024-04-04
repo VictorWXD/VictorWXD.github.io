@@ -131,7 +131,7 @@ document.getElementById('verticalBlock').onmouseup = function() {
   let exit = document.getElementById('exit').getBoundingClientRect();
   let goButton = document.getElementById('goButton');
 
-  if (block.top < exit.top && block.top > exit.bottom) {
+  if (block.top > exit.bottom) {
     goButton.disabled = false;
   }else{
     goButton.disabled = true;
