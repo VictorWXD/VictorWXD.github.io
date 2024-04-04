@@ -130,7 +130,7 @@ document.getElementById('verticalBlock').onmouseup = function() {
   let overlapWidth = Math.min(block.right, exit.right) - Math.max(block.left, exit.left);
   let overlapHeight = Math.min(block.bottom, exit.bottom) - Math.max(block.top, exit.top);
 
-  if (overlapWidth > block.width * 0.5 && overlapHeight > block.height * 0.5) {
+  if (overlapWidth > block.width * 0.7 && overlapHeight > block.height * 0.7) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
