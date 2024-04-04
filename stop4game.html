@@ -83,6 +83,11 @@ document.querySelectorAll('.block').forEach(function(block) {
       document.removeEventListener('mousemove', onMouseMove);
       block.onmouseup = null;
     };
+
+    block.onmouseleave = function() {
+      document.removeEventListener('mousemove', onMouseMove);
+      block.onmouseup = null;
+    };
   };
 
   block.ondragstart = function() {
