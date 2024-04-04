@@ -126,11 +126,10 @@ blocks.forEach(function(block) {
 
 document.getElementById('verticalBlock').onmouseup = function() {
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
-  let centerX = (block.left + block.right) / 2;
-  let centerY = (block.top + block.bottom) / 2;
+  let exit = document.getElementById('exit').getBoundingClientRect();
 
-  if (centerX > exit.left && centerX < exit.right &&
-      centerY > exit.top && centerY < exit.bottom) {
+  if (block.right > exit.left && block.left < exit.right &&
+      block.bottom > exit.top && block.top < exit.bottom) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
