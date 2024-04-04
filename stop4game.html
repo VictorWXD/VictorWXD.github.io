@@ -128,8 +128,8 @@ document.getElementById('verticalBlock').onmouseup = function() {
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
   let exit = document.getElementById('exit').getBoundingClientRect();
 
-  if (block.right > exit.left && block.left < exit.right &&
-      block.bottom > exit.top && block.top < exit.bottom) {
+  if (block.right > exit.left || block.left < exit.right ||
+      block.bottom > exit.top || block.top < exit.bottom) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
