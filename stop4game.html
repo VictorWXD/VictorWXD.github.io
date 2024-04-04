@@ -29,7 +29,7 @@
     top: 0;
     left: 125px;
     background-color: transparent;
-    border-bottom: 5px solid #000;
+    border: 3px solid blue;
   }
   .horizontalBlock {
     background-color: red;
@@ -126,8 +126,11 @@ blocks.forEach(function(block) {
 
 document.getElementById('verticalBlock').onmouseup = function() {
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
-  if (block.top <= exit.bottom && block.bottom >= exit.top &&
-      block.left < exit.right && block.right > exit.left) {
+
+  let overlapWidth = Math.min(block.right, exit.right) - Math.max(block.left, exit.left);
+  let overlapHeight = Math.min(block.bottom, exit.bottom) - Math.max(block.top, exit.top);
+
+  if (overlapWidth > block.width * 0.5 && overlapHeight > block.height * 0.5) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
