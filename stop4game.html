@@ -9,35 +9,32 @@
     height: 300px;
     position: relative;
     background-color: #f0f0f0;
-    border: 5px solid #000;
+    border: 5px solid #000; /* 游戏区域黑色边框 */
   }
   .block {
     position: absolute;
-    background-color: #333;
   }
   #verticalBlock {
     width: 50px;
     height: 100px;
     bottom: 0;
     left: 125px;
-    background-color: blue;
+    background-color: blue; /* 竖向方块为蓝色 */
   }
   #exit {
-    width: 100%;
+    width: 50px;
     height: 50px;
     position: absolute;
     top: 0;
-    left: 50px;
+    right: 0;
     background-color: transparent;
-    border-bottom: 5px solid #000;
   }
   .horizontalBlock {
-    height: 50px;
-    background-color: red;
+    background-color: red; /* 横向方块为红色 */
   }
-  .horizontalBlock1 { width: 100px; }
-  .horizontalBlock2 { width: 150px; }
-  .horizontalBlock3 { width: 50px; }
+  .horizontalBlock1 { width: 100px; height: 50px; }
+  .horizontalBlock2 { width: 150px; height: 50px; }
+  .horizontalBlock3 { width: 50px; height: 50px; }
 </style>
 </head>
 <body>
@@ -53,23 +50,25 @@
 
 <script>
 document.querySelectorAll('.block').forEach(function(block) {
-  let gameArea = document.getElementById('gameArea').getBoundingClientRect();
-  let blockRect = block.getBoundingClientRect();
   block.onmousedown = function(event) {
-    let shiftX = event.clientX - blockRect.left;
-    let shiftY = event.clientY - blockRect.top;
+    let shiftX = event.clientX - block.getBoundingClientRect().left;
+    let shiftY = event.clientY - block.getBoundingClientRect().top;
+    let gameArea = document.getElementById('gameArea').getBoundingClientRect();
 
     function moveAt(pageX, pageY) {
       let newLeft = pageX - shiftX;
       let newTop = pageY - shiftY;
+
+      // 限制横向方块在其所在行中移动
       if (block.classList.contains('horizontalBlock')) {
-        if (newTop > gameArea.top && newTop < gameArea.bottom - blockRect.height) {
-          block.style.top = newTop + 'px';
+        if (newLeft >= gameArea.left && newLeft <= gameArea.right - block.offsetWidth) {
+          block.style.left = newLeft + 'px';
         }
       }
+      // 限制竖向方块在其所在列中移动
       if (block.id === 'verticalBlock') {
-        if (newLeft > gameArea.left && newLeft < gameArea.right - blockRect.width) {
-          block.style.left = newLeft + 'px';
+        if (newTop >= gameArea.top && newTop <= gameArea.bottom - block.offsetHeight) {
+          block.style.top = newTop + 'px';
         }
       }
     }
