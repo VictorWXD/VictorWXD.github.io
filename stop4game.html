@@ -124,10 +124,9 @@ blocks.forEach(function(block) {
   };
 });
 
-document.getElementById('verticalBlock').onmouseup = function() {
+document.onmouseup = function() {
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
   let exit = document.getElementById('exit').getBoundingClientRect();
-  let goButton = document.getElementById('goButton');
 
   if (block.right > exit.left && block.left < exit.right &&
       block.bottom > exit.top && block.top < exit.bottom) {
