@@ -9,28 +9,30 @@
     height: 300px;
     position: relative;
     background-color: #f0f0f0;
-    border: 5px solid #000; /* 游戏区域黑色边框 */
+    border: 5px solid #000;
   }
   .block {
     position: absolute;
+    background-color: #333;
   }
   #verticalBlock {
     width: 50px;
     height: 100px;
-    bottom: 0;
+    top: 200px;
     left: 125px;
-    background-color: blue; /* 竖向方块为蓝色 */
+    background-color: blue;
   }
   #exit {
     width: 50px;
     height: 50px;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 125px;
     background-color: transparent;
+    border-bottom: 5px solid #000;
   }
   .horizontalBlock {
-    background-color: red; /* 横向方块为红色 */
+    background-color: red;
   }
   .horizontalBlock1 { width: 100px; height: 50px; }
   .horizontalBlock2 { width: 150px; height: 50px; }
@@ -49,23 +51,35 @@
 </div>
 
 <script>
-document.querySelectorAll('.block').forEach(function(block) {
+
+const blocks = document.querySelectorAll('.block');
+const gameArea = document.getElementById('gameArea').getBoundingClientRect();
+const exit = document.getElementById('exit').getBoundingClientRect();
+
+function isColliding(block1, block2) {
+  const rect1 = block1.getBoundingClientRect();
+  const rect2 = block2.getBoundingClientRect();
+  return !(rect1.right <= rect2.left || 
+           rect1.left >= rect2.right || 
+           rect1.bottom <= rect2.top || 
+           rect1.top >= rect2.bottom);
+}
+
+blocks.forEach(function(block) {
   block.onmousedown = function(event) {
     let shiftX = event.clientX - block.getBoundingClientRect().left;
     let shiftY = event.clientY - block.getBoundingClientRect().top;
-    let gameArea = document.getElementById('gameArea').getBoundingClientRect();
 
     function moveAt(pageX, pageY) {
       let newLeft = pageX - shiftX;
       let newTop = pageY - shiftY;
 
-      // 限制横向方块在其所在行中移动
       if (block.classList.contains('horizontalBlock')) {
         if (newLeft >= gameArea.left && newLeft <= gameArea.right - block.offsetWidth) {
           block.style.left = newLeft + 'px';
         }
       }
-      // 限制竖向方块在其所在列中移动
+
       if (block.id === 'verticalBlock') {
         if (newTop >= gameArea.top && newTop <= gameArea.bottom - block.offsetHeight) {
           block.style.top = newTop + 'px';
@@ -75,6 +89,18 @@ document.querySelectorAll('.block').forEach(function(block) {
 
     function onMouseMove(event) {
       moveAt(event.pageX, event.pageY);
+
+      let hasCollision = false;
+      blocks.forEach(function(otherBlock) {
+        if (otherBlock !== block && isColliding(block, otherBlock)) {
+          hasCollision = true;
+        }
+      });
+
+      if (hasCollision) {
+        document.removeEventListener('mousemove', onMouseMove);
+        block.onmouseup = null;
+      }
     }
 
     document.addEventListener('mousemove', onMouseMove);
@@ -96,9 +122,9 @@ document.querySelectorAll('.block').forEach(function(block) {
 });
 
 document.getElementById('verticalBlock').onmouseup = function() {
-  let exit = document.getElementById('exit').getBoundingClientRect();
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
-  if (block.top <= exit.bottom && block.bottom >= exit.top) {
+  if (block.top <= exit.bottom && block.bottom >= exit.top &&
+      block.left < exit.right && block.right > exit.left) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
