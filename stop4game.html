@@ -61,15 +61,6 @@ const gameArea = document.getElementById('gameArea').getBoundingClientRect();
 const exit = document.getElementById('exit').getBoundingClientRect();
 const borderWidth = 3;
 
-function isColliding(block1, block2) {
-  const rect1 = block1.getBoundingClientRect();
-  const rect2 = block2.getBoundingClientRect();
-  return !(rect1.right <= rect2.left || 
-           rect1.left >= rect2.right || 
-           rect1.bottom <= rect2.top || 
-           rect1.top >= rect2.bottom);
-}
-
 blocks.forEach(function(block) {
   block.onmousedown = function(event) {
     let shiftX = event.clientX - block.getBoundingClientRect().left;
@@ -79,50 +70,48 @@ blocks.forEach(function(block) {
       let newLeft = pageX - shiftX - gameArea.left - borderWidth;
       let newTop = pageY - shiftY - gameArea.top - borderWidth;
 
-      if (block.classList.contains('horizontalBlock')) {
-        if (newLeft >= 0 && newLeft <= gameArea.width - block.offsetWidth - borderWidth * 2) {
-          block.style.left = newLeft + 'px';
-        }
-      }
+      let futureBlock = block.cloneNode(true);
+      document.body.appendChild(futureBlock);
+      futureBlock.style.left = newLeft + 'px';
+      futureBlock.style.top = newTop + 'px';
 
-      if (block.id === 'verticalBlock') {
-        if (newTop >= 0 && newTop <= gameArea.height - block.offsetHeight - borderWidth * 2) {
-          block.style.top = newTop + 'px';
-        }
-      }
-    }
-
-    function onMouseMove(event) {
-      moveAt(event.pageX, event.pageY);
-
-      let hasCollision = false;
+      let willCollide = false;
       blocks.forEach(function(otherBlock) {
-        if (otherBlock !== block && isColliding(block, otherBlock)) {
-          hasCollision = true;
+        if (otherBlock !== block && isColliding(futureBlock, otherBlock)) {
+          willCollide = true;
         }
       });
 
-      if (hasCollision) {
-        document.removeEventListener('mousemove', onMouseMove);
-        block.onmouseup = null;
+      document.body.removeChild(futureBlock);
+
+      if (!willCollide) {
+        if (block.classList.contains('horizontalBlock')) {
+          if (newLeft >= 0 && newLeft <= gameArea.width - block.offsetWidth - borderWidth * 2) {
+            block.style.left = newLeft + 'px';
+          }
+        }
+
+        if (block.id === 'verticalBlock') {
+          if (newTop >= 0 && newTop <= gameArea.height - block.offsetHeight - borderWidth * 2) {
+            block.style.top = newTop + 'px';
+          }
+        }
       }
     }
 
-    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mousemove', moveAt);
 
     block.onmouseup = function() {
-      document.removeEventListener('mousemove', onMouseMove);
-      block.onmouseup = null;
+      document.removeEventListener('mousemove', moveAt);
     };
 
     block.onmouseleave = function() {
-      document.removeEventListener('mousemove', onMouseMove);
-      block.onmouseup = null;
+      document.removeEventListener('mousemove', moveAt);
     };
-  };
 
-  block.ondragstart = function() {
-    return false;
+    block.ondragstart = function() {
+      return false;
+    };
   };
 });
 
@@ -131,7 +120,8 @@ document.getElementById('verticalBlock').onmouseup = function() {
   let exit = document.getElementById('exit').getBoundingClientRect();
   let goButton = document.getElementById('goButton');
 
-  if (block.bottom > exit.bottom) {
+  if (block.right > exit.left && block.left < exit.right &&
+      block.bottom > exit.top && block.top < exit.bottom) {
     goButton.disabled = false;
   }else{
     goButton.disabled = true;
