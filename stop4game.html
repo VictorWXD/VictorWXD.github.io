@@ -52,8 +52,6 @@
   <div class="block horizontalBlock horizontalBlock3" style="bottom: 200px; left: 150px;"></div>
 </div>
 
-<button id="goButton" disabled>Escape!</button>
-
 <script>
 
 const blocks = document.querySelectorAll('.block');
@@ -133,14 +131,8 @@ document.getElementById('verticalBlock').onmouseup = function() {
 
   if (block.right > exit.left && block.left < exit.right &&
       block.bottom > exit.top && block.top < exit.bottom) {
-    goButton.disabled = false;
-  }else{
-    goButton.disabled = true;
+    window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
-};
-
-goButton.onclick = function() {
-  window.location.href = 'https://victorwxd.github.io/stop4intro';
 };
 
 </script>
