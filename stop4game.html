@@ -126,14 +126,15 @@ blocks.forEach(function(block) {
 
 document.getElementById('verticalBlock').onmouseup = function() {
   let block = document.getElementById('verticalBlock').getBoundingClientRect();
+  let centerX = (block.left + block.right) / 2;
+  let centerY = (block.top + block.bottom) / 2;
 
-  let overlapWidth = Math.min(block.right, exit.right) - Math.max(block.left, exit.left);
-  let overlapHeight = Math.min(block.bottom, exit.bottom) - Math.max(block.top, exit.top);
-
-  if (overlapWidth > block.width * 0.7 && overlapHeight > block.height * 0.7) {
+  if (centerX > exit.left && centerX < exit.right &&
+      centerY > exit.top && centerY < exit.bottom) {
     window.location.href = 'https://victorwxd.github.io/stop4intro';
   }
 };
+
 </script>
 
 </body>
