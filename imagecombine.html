@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>图像上传与拼接示例</title>
+<style>
+  .image-container {
+    position: relative;
+    width: 1024px; /* 设置为原图像的宽度 */
+    height: 1024px; /* 设置为原图像的高度 */
+  }
+  .image-part {
+    position: absolute;
+    width: 1024px; /* 设置为原图像的宽度 */
+    height: 256px; /* 设置为原图像高度的四分之一 */
+    background-size: 1024px 1024px;
+  }
+</style>
+</head>
+<body>
+
+<input type="file" id="imageUpload" accept="image/*" multiple>
+<div class="image-container" id="imageContainer"></div>
+
+<script>
+  document.getElementById('imageUpload').addEventListener('change', function(event) {
+    var files = event.target.files;
+    if(files.length !== 4) {
+      alert('请上传四个被竖直切分的图像片段。');
+      return;
+    }
+    var container = document.getElementById('imageContainer');
+    container.innerHTML = ''; // 清空容器中的内容
+    for (var i = 0; i < files.length; i++) {
+      (function(file, index) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var part = document.createElement('div');
+          part.className = 'image-part';
+          part.style.backgroundImage = 'url(' + e.target.result + ')';
+          part.style.backgroundPosition = '0 ' + (-256 * index) + 'px';
+          container.appendChild(part);
+        };
+        reader.readAsDataURL(file);
+      })(files[i], i);
+    }
+  });
+</script>
+
+</body>
+</html>
