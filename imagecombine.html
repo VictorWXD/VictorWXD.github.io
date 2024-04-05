@@ -2,17 +2,17 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>图像上传与拼接示例</title>
+<title>图像拼接与下载</title>
 <style>
   .image-container {
     position: relative;
-    width: 1024px; /* 设置为原图像的宽度 */
-    height: 1024px; /* 设置为原图像的高度 */
+    width: 1024px;
+    height: 1024px;
   }
   .image-part {
     position: absolute;
-    width: 1024px; /* 设置为原图像的宽度 */
-    height: 256px; /* 设置为原图像高度的四分之一 */
+    width: 1024px;
+    height: 256px;
     background-size: 1024px 1024px;
   }
 </style>
@@ -21,6 +21,7 @@
 
 <input type="file" id="imageUpload" accept="image/*" multiple>
 <div class="image-container" id="imageContainer"></div>
+<button id="downloadButton">下载图像</button>
 
 <script>
   document.getElementById('imageUpload').addEventListener('change', function(event) {
@@ -45,7 +46,18 @@
       })(files[i], i);
     }
   });
+
+  document.getElementById('downloadButton').addEventListener('click', function() {
+    var container = document.getElementById('imageContainer');
+    html2canvas(container).then(function(canvas) {
+      var link = document.createElement('a');
+      link.download = 'complete_image.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
 
 </body>
 </html>
