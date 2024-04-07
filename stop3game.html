@@ -58,8 +58,34 @@ function createPieces() {
     container.appendChild(piece);
     pieces.push(piece);
     }
+    addClickEventToPieces(pieces);
+}
+
+function addClickEventToPieces(pieces) {
+    var selectedPiece = null;
     pieces.forEach(function(piece) {
-    piece.addEventListener('mousedown', onPieceMouseDown);
+        piece.addEventListener('click', function() {
+            if (!selectedPiece) {
+                selectedPiece = this;
+                this.classList.add('selected');
+            } else if (selectedPiece === this) {
+                selectedPiece.classList.remove('selected');
+                selectedPiece = null;
+            } else {
+                var tempX = this.style.left;
+                var tempY = this.style.top;
+                this.style.left = selectedPiece.style.left;
+                this.style.top = selectedPiece.style.top;
+                selectedPiece.style.left = tempX;
+                selectedPiece.style.top = tempY;
+                
+                checkPosition(this, parseInt(this.getAttribute('data-index'), 10));
+                checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
+                
+                selectedPiece.classList.remove('selected');
+                selectedPiece = null;
+            }
+        });
     });
 }
 
@@ -78,33 +104,6 @@ function checkPosition(piece, index) {
         }
     }
 }
-
-var selectedPiece = null;
-pieces.forEach(function(piece) {
-    piece.addEventListener('click', function() {
-        if (!selectedPiece) {
-            selectedPiece = this;
-            this.classList.add('selected');
-        } else if (selectedPiece === this) {
-            
-            selectedPiece.classList.remove('selected');
-            selectedPiece = null;
-        } else {
-            var tempX = this.style.left;
-            var tempY = this.style.top;
-            this.style.left = selectedPiece.style.left;
-            this.style.top = selectedPiece.style.top;
-            selectedPiece.style.left = tempX;
-            selectedPiece.style.top = tempY;
-            
-            checkPosition(this, parseInt(this.getAttribute('data-index'), 10));
-            checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
-            
-            selectedPiece.classList.remove('selected');
-            selectedPiece = null;
-        }
-    });
-});
 
 window.onload = createPieces;
 </script>
