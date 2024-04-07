@@ -94,17 +94,17 @@ function checkPosition(piece, index) {
         correctY = Math.floor(index / 3) * 100;
     var currentX = parseInt(piece.style.left, 10),
         currentY = parseInt(piece.style.top, 10);
-    if (Math.abs(currentX - correctX) <= 10 && Math.abs(currentY - correctY) <= 10) {
-        piece.style.left = correctX + 'px';
-        piece.style.top = correctY + 'px';
+    if (currentX === correctX && currentY === correctY) {
         piece.classList.add('correct-position');
         correctPositions++;
-        if (correctPositions === 9) {
-        window.location.href = redirectUrl;
-        }
     } else {
         piece.classList.remove('correct-position');
-        correctPositions--;
+        if (piece.classList.contains('correct-position')) {
+            correctPositions--;
+        }
+    }
+    if (correctPositions === 9) {
+        window.location.href = redirectUrl;
     }
 }
 
