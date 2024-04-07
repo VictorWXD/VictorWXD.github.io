@@ -87,16 +87,26 @@ function onPieceMouseDown(e) {
     function movePiece(e) {
         var mouseX = e.clientX;
         var mouseY = e.clientY;
-        var Width = selectedPiece.offsetWidth;
-        var Height = selectedPiece.offsetHeight;
-        selectedPiece.style.left = (mouseX - Width) + 'px';
-        selectedPiece.style.top = (mouseY - Height) + 'px';
+        selectedPiece.style.left = (mouseX - x) + 'px';
+        selectedPiece.style.top = (mouseY - y) + 'px';
     }
 
     function dropPiece(e) {
         document.removeEventListener('mousemove', movePiece);
         document.removeEventListener('mouseup', dropPiece);
-        checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
+        var targetPiece = document.elementFromPoint(e.clientX, e.clientY);
+        if (targetPiece && targetPiece !== selectedPiece && targetPiece.classList.contains('puzzle-piece')) {
+            var targetX = targetPiece.style.left;
+            var targetY = targetPiece.style.top;
+            targetPiece.style.left = selectedPiece.style.left;
+            targetPiece.style.top = selectedPiece.style.top;
+            selectedPiece.style.left = targetX;
+            selectedPiece.style.top = targetY;
+            checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
+            checkPosition(targetPiece, parseInt(targetPiece.getAttribute('data-index'), 10));
+        } else {
+            checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
+        }
     }
 
     document.addEventListener('mousemove', movePiece);
