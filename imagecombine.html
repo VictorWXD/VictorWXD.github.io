@@ -15,11 +15,8 @@
 
 <!-- 文件上传表单 -->
 <form id="uploadForm">
-  <input type="file" id="female1" accept="image/png" /><br>
-  <input type="file" id="female2" accept="image/png" /><br>
-  <input type="file" id="female3" accept="image/png" /><br>
-  <input type="file" id="female4" accept="image/png" /><br>
-  <button type="button" onclick="combineImages()">组合图像</button>
+  <input type="file" id="imageUpload" accept="image/png" multiple><br>
+  <button type="button" onclick="combineImages()">上传并组合图像</button>
 </form>
 
 <div id="imagePreview"></div>
@@ -28,39 +25,37 @@
 
 <script>
 function combineImages() {
+  const files = Array.from(document.getElementById('imageUpload').files);
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  const images = [];
-  let loadedImages = 0;
+  const correctNames = ['Female1.png', 'Female2.png', 'Female3.png', 'Female4.png'];
+  let imagesLoaded = 0;
 
-  // 加载图像并在canvas上绘制
-  for (let i = 1; i <= 4; i++) {
-    const img = document.getElementById('female' + i).files[0];
-    if (img && img.name === 'Female ' + i + '.png') {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const image = new Image();
-        image.onload = function() {
-          images[i - 1] = image;
-          loadedImages++;
-          if (loadedImages === 4) {
-            // 所有图像加载完成后，绘制到canvas上
-            for (let j = 0; j < images.length; j++) {
-              ctx.drawImage(images[j], 0, j * 256, 1024, 256);
-            }
-            // 显示组合后的图像
-            const dataURL = canvas.toDataURL('image/png');
-            document.getElementById('imagePreview').innerHTML = '<img src="' + dataURL + '" />';
-          }
-        };
-        image.src = event.target.result;
-      };
-      reader.readAsDataURL(img);
-    } else {
-      alert('请上传正确命名的PNG图像文件：Female ' + i + '.png');
-      return;
-    }
+  // 检查文件数量和命名
+  if (files.length !== 4 || !files.every(file => correctNames.includes(file.name))) {
+    alert('请确保上传四张正确命名的图像。');
+    return;
   }
+
+  // 按文件名排序
+  files.sort((a, b) => correctNames.indexOf(a.name) - correctNames.indexOf(b.name));
+
+  files.forEach((file, index) => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, 0, index * 256, 1024, 256);
+        imagesLoaded++;
+        if (imagesLoaded === 4) {
+          const dataURL = canvas.toDataURL('image/png');
+          document.getElementById('imagePreview').innerHTML = '<img src="' + dataURL + '" />';
+        }
+      };
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 </script>
 
