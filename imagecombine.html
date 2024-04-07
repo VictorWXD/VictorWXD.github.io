@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>图像组合器</title>
+<title>ImageCombine</title>
 <style>
   body { text-align: center; margin-top: 50px; }
   #imagePreview { margin-top: 20px; }
@@ -11,12 +11,11 @@
 </head>
 <body>
 
-<h2>上传四张图像以组合成一张1024x1024的图像</h2>
+<h2>Please upload four pieces to combine into the final reward</h2>
 
-<!-- 文件上传表单 -->
 <form id="uploadForm">
   <input type="file" id="imageUpload" accept="image/png" multiple><br>
-  <button type="button" onclick="combineImages()">上传并组合图像</button>
+  <button type="button" onclick="combineImages()">Upload and combine the images</button>
 </form>
 
 <div id="imagePreview"></div>
@@ -31,13 +30,12 @@ function combineImages() {
   const correctNames = ['Female1.png', 'Female2.png', 'Female3.png', 'Female4.png'];
   let imagesLoaded = 0;
 
-  // 检查文件数量和命名
+  // check
   if (files.length !== 4 || !files.every(file => correctNames.includes(file.name))) {
-    alert('请确保上传四张正确命名的图像。');
+    alert('Make sure to upload four correct images');
     return;
   }
 
-  // 按文件名排序
   files.sort((a, b) => correctNames.indexOf(a.name) - correctNames.indexOf(b.name));
 
   files.forEach((file, index) => {
