@@ -27,11 +27,11 @@
 
 <body>
 
-<h1>A puzzle game of UON logo(Please move all images into correct position)</h1>
+<h1>A puzzle game of UON logo(Please click the two pieces of the puzzle to swap places)</h1>
 <div id="puzzle-container">
 
 </div>
-    
+
 <script>
 var pieces = [],
     container = document.getElementById('puzzle-container'),
@@ -83,15 +83,13 @@ var selectedPiece = null;
 pieces.forEach(function(piece) {
     piece.addEventListener('click', function() {
         if (!selectedPiece) {
-            // 选中当前的碎片
             selectedPiece = this;
             this.classList.add('selected');
         } else if (selectedPiece === this) {
-            // 如果点击的是已选中的碎片，则取消选中
+            
             selectedPiece.classList.remove('selected');
             selectedPiece = null;
         } else {
-            // 与选中的碎片互换位置
             var tempX = this.style.left;
             var tempY = this.style.top;
             this.style.left = selectedPiece.style.left;
@@ -99,11 +97,9 @@ pieces.forEach(function(piece) {
             selectedPiece.style.left = tempX;
             selectedPiece.style.top = tempY;
             
-            // 检查新位置是否正确
             checkPosition(this, parseInt(this.getAttribute('data-index'), 10));
             checkPosition(selectedPiece, parseInt(selectedPiece.getAttribute('data-index'), 10));
             
-            // 重置选中的碎片
             selectedPiece.classList.remove('selected');
             selectedPiece = null;
         }
