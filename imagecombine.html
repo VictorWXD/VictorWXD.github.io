@@ -1,65 +1,68 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>图像拼接与下载</title>
+<title>图像组合器</title>
 <style>
-  .image-container {
-    position: relative;
-    width: 1024px; /* 设置为原图像的宽度 */
-    height: 1024px; /* 设置为原图像的高度 */
-    display: flex;
-    flex-direction: column;
-  }
-  .image-part {
-    width: 1024px; /* 设置为原图像的宽度 */
-    height: 256px; /* 设置为原图像高度的四分之一 */
-    background-size: 1024px 1024px;
-    background-repeat: no-repeat;
-  }
+  body { text-align: center; margin-top: 50px; }
+  #imagePreview { margin-top: 20px; }
+  canvas { display: none; }
 </style>
 </head>
 <body>
 
-<input type="file" id="imageUpload" accept="image/*" multiple>
-<div class="image-container" id="imageContainer"></div>
-<button id="downloadButton">下载图像</button>
+<h2>上传四张图像以组合成一张1024x1024的图像</h2>
+
+<!-- 文件上传表单 -->
+<form id="uploadForm">
+  <input type="file" id="female1" accept="image/png" /><br>
+  <input type="file" id="female2" accept="image/png" /><br>
+  <input type="file" id="female3" accept="image/png" /><br>
+  <input type="file" id="female4" accept="image/png" /><br>
+  <button type="button" onclick="combineImages()">组合图像</button>
+</form>
+
+<div id="imagePreview"></div>
+
+<canvas id="canvas" width="1024" height="1024"></canvas>
 
 <script>
-  document.getElementById('imageUpload').addEventListener('change', function(event) {
-    var files = event.target.files;
-    if(files.length !== 4) {
-      alert('请上传四个被竖直切分的图像片段。');
+function combineImages() {
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const images = [];
+  let loadedImages = 0;
+
+  // 加载图像并在canvas上绘制
+  for (let i = 1; i <= 4; i++) {
+    const img = document.getElementById('female' + i).files[0];
+    if (img && img.name === 'Female ' + i + '.png') {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const image = new Image();
+        image.onload = function() {
+          images[i - 1] = image;
+          loadedImages++;
+          if (loadedImages === 4) {
+            // 所有图像加载完成后，绘制到canvas上
+            for (let j = 0; j < images.length; j++) {
+              ctx.drawImage(images[j], 0, j * 256, 1024, 256);
+            }
+            // 显示组合后的图像
+            const dataURL = canvas.toDataURL('image/png');
+            document.getElementById('imagePreview').innerHTML = '<img src="' + dataURL + '" />';
+          }
+        };
+        image.src = event.target.result;
+      };
+      reader.readAsDataURL(img);
+    } else {
+      alert('请上传正确命名的PNG图像文件：Female ' + i + '.png');
       return;
     }
-    var container = document.getElementById('imageContainer');
-    container.innerHTML = ''; // 清空容器中的内容
-    Array.from(files).sort(function(a, b) {
-      // 根据文件名排序
-      return a.name.localeCompare(b.name);
-    }).forEach(function(file, index) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var part = document.createElement('div');
-        part.className = 'image-part';
-        part.style.backgroundImage = 'url(' + e.target.result + ')';
-        container.appendChild(part);
-      };
-      reader.readAsDataURL(file);
-    });
-  });
-
-  document.getElementById('downloadButton').addEventListener('click', function() {
-    var container = document.getElementById('imageContainer');
-    html2canvas(container, {scrollY: -window.scrollY}).then(function(canvas) {
-      var link = document.createElement('a');
-      link.download = 'complete_image.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  });
+  }
+}
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
 
 </body>
 </html>
