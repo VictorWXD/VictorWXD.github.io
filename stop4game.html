@@ -57,42 +57,21 @@
   const blocks = document.querySelectorAll('.block');
   const gameArea = document.getElementById('gameArea').getBoundingClientRect();
   const borderWidth = 3;
-  const verticalBlock = document.getElementById('verticalBlock');
-  const horizontalBlocks = document.querySelectorAll('.horizontalBlock');
   
   blocks.forEach(function(block) {
-  block.onclick = function(event) {
-    let pathClear = true;
-    let vBlockRect = verticalBlock.getBoundingClientRect();
-    let gameAreaLeft = gameArea.left + borderWidth;
-    let gameAreaRight = gameArea.right - borderWidth;
-
-    // Check if the vertical block is at the bottom
-    if (vBlockRect.bottom < gameArea.bottom) {
-      horizontalBlocks.forEach(function(hBlock) {
-        let hBlockRect = hBlock.getBoundingClientRect();
-
-        // Check if the horizontal block is not at the extreme left or right
-        if (!(hBlockRect.right <= gameAreaLeft || hBlockRect.left >= gameAreaRight)) {
-          pathClear = false;
+    block.onclick = function(event) {
+      if (block.classList.contains('horizontalBlock')) {
+        // Toggle block position between left and right border
+        if (block.style.left === '0px') {
+          block.style.left = gameArea.width - block.offsetWidth - borderWidth * 2 + 'px';
+        } else {
+          block.style.left = '0px';
         }
-      });
-    } else {
-      pathClear = false;
-    }
-
-    if (block.classList.contains('horizontalBlock')) {
-      // Toggle block position between left and right border
-      if (block.style.left === '0px') {
-        block.style.left = gameArea.width - block.offsetWidth - borderWidth * 2 + 'px';
-      } else {
-        block.style.left = '0px';
       }
-    }
-
-    if (block.id === 'verticalBlock' && pathClear) {
-      // Move vertical block to the top border only if path is clear
-      block.style.top = '0px';
+  
+      if (block.id === 'verticalBlock') {
+        // Move vertical block to the top border
+        block.style.top = '0px';
       }
     };
   });
@@ -107,7 +86,7 @@
     }
   };
   
-</script>
+  </script>
 
 </body>
 </html>
