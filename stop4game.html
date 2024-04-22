@@ -54,87 +54,39 @@
 
 <script>
 
-const blocks = document.querySelectorAll('.block');
-const gameArea = document.getElementById('gameArea').getBoundingClientRect();
-const exit = document.getElementById('exit').getBoundingClientRect();
-const borderWidth = 3;
-
-function isColliding(block1, block2) {
-  const rect1 = block1.getBoundingClientRect();
-  const rect2 = block2.getBoundingClientRect();
-  return !(rect1.right <= rect2.left || 
-           rect1.left >= rect2.right || 
-           rect1.bottom <= rect2.top || 
-           rect1.top >= rect2.bottom);
-}
-
-blocks.forEach(function(block) {
-  block.onmousedown = function(event) {
-    let shiftX = event.clientX - block.getBoundingClientRect().left;
-    let shiftY = event.clientY - block.getBoundingClientRect().top;
-
-    function moveAt(pageX, pageY) {
-      let newLeft = pageX - shiftX - gameArea.left - borderWidth;
-      let newTop = pageY - shiftY - gameArea.top - borderWidth;
-
+  const blocks = document.querySelectorAll('.block');
+  const gameArea = document.getElementById('gameArea').getBoundingClientRect();
+  const borderWidth = 3;
+  
+  blocks.forEach(function(block) {
+    block.onclick = function(event) {
       if (block.classList.contains('horizontalBlock')) {
-        if (newLeft >= 0 && newLeft <= gameArea.width - block.offsetWidth - borderWidth * 2) {
-          block.style.left = newLeft + 'px';
+        // Toggle block position between left and right border
+        if (block.style.left === '0px') {
+          block.style.left = gameArea.width - block.offsetWidth - borderWidth * 2 + 'px';
+        } else {
+          block.style.left = '0px';
         }
       }
-
+  
       if (block.id === 'verticalBlock') {
-        if (newTop >= 0 && newTop <= gameArea.height - block.offsetHeight - borderWidth * 2) {
-          block.style.top = newTop + 'px';
-        }
+        // Move vertical block to the top border
+        block.style.top = '0px';
       }
-    }
-
-    function onMouseMove(event) {
-      moveAt(event.pageX, event.pageY);
-
-      let hasCollision = false;
-      blocks.forEach(function(otherBlock) {
-        if (otherBlock !== block && isColliding(block, otherBlock)) {
-          hasCollision = true;
-        }
-      });
-
-      if (hasCollision) {
-        document.removeEventListener('mousemove', onMouseMove);
-        block.onmouseup = null;
-      }
-    }
-
-    document.addEventListener('mousemove', onMouseMove);
-
-    block.onmouseup = function() {
-      document.removeEventListener('mousemove', onMouseMove);
-      block.onmouseup = null;
     };
-
-    block.onmouseleave = function() {
-      document.removeEventListener('mousemove', onMouseMove);
-      block.onmouseup = null;
-    };
+  });
+  
+  document.onmouseup = function() {
+    let block = document.getElementById('verticalBlock').getBoundingClientRect();
+    let exit = document.getElementById('exit').getBoundingClientRect();
+  
+    if (block.right > exit.left && block.left < exit.right &&
+        block.bottom > exit.top && block.top < exit.bottom) {
+      window.location.href = 'https://victorwxd.github.io/stop4intro';
+    }
   };
-
-  block.ondragstart = function() {
-    return false;
-  };
-});
-
-document.onmouseup = function() {
-  let block = document.getElementById('verticalBlock').getBoundingClientRect();
-  let exit = document.getElementById('exit').getBoundingClientRect();
-
-  if (block.right > exit.left && block.left < exit.right &&
-      block.bottom > exit.top && block.top < exit.bottom) {
-    window.location.href = 'https://victorwxd.github.io/stop4intro';
-  }
-};
-
-</script>
+  
+  </script>
 
 </body>
 </html>
