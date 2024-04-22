@@ -41,7 +41,7 @@
 </head>
 <body>
 
-<h1>Please drag the blue block to exit</h1>
+<h1>Please click the red block to avoid blocking the blue block(If success, click blue again)</h1>
 
 <div id="gameArea">
   <div id="exit"></div>
@@ -53,28 +53,27 @@
 </div>
 
 <script>
-
   const blocks = document.querySelectorAll('.block');
   const gameArea = document.getElementById('gameArea').getBoundingClientRect();
   const borderWidth = 3;
+  const verticalBlock = document.getElementById('verticalBlock');
+  const horizontalBlocks = document.querySelectorAll('.horizontalBlock');
   
-  blocks.forEach(function(block) {
-    block.onclick = function(event) {
-      if (block.classList.contains('horizontalBlock')) {
-        // Toggle block position between left and right border
-        if (block.style.left === '0px') {
-          block.style.left = gameArea.width - block.offsetWidth - borderWidth * 2 + 'px';
-        } else {
-          block.style.left = '0px';
-        }
-      }
+  verticalBlock.onclick = function(event) {
+    let canMove = true;
+    const verticalRect = verticalBlock.getBoundingClientRect();
   
-      if (block.id === 'verticalBlock') {
-        // Move vertical block to the top border
-        block.style.top = '0px';
+    horizontalBlocks.forEach(function(block) {
+      const rect = block.getBoundingClientRect();
+      if (rect.bottom > gameArea.top && rect.top < verticalRect.top) {
+        canMove = false;
       }
-    };
-  });
+    });
+  
+    if (canMove) {
+      verticalBlock.style.top = '0px';
+    }
+  };
   
   document.onmouseup = function() {
     let block = document.getElementById('verticalBlock').getBoundingClientRect();
@@ -85,7 +84,6 @@
       window.location.href = 'https://victorwxd.github.io/stop4intro';
     }
   };
-  
   </script>
 
 </body>
