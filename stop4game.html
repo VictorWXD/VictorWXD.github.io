@@ -53,27 +53,30 @@
 </div>
 
 <script>
+
   const blocks = document.querySelectorAll('.block');
   const gameArea = document.getElementById('gameArea').getBoundingClientRect();
   const borderWidth = 3;
   const verticalBlock = document.getElementById('verticalBlock');
   const horizontalBlocks = document.querySelectorAll('.horizontalBlock');
   
-  verticalBlock.onclick = function(event) {
-    let canMove = true;
-    const verticalRect = verticalBlock.getBoundingClientRect();
-  
-    horizontalBlocks.forEach(function(block) {
-      const rect = block.getBoundingClientRect();
-      if (rect.bottom > gameArea.top && rect.top < verticalRect.top) {
-        canMove = false;
+  blocks.forEach(function(block) {
+    block.onclick = function(event) {
+      if (block.classList.contains('horizontalBlock')) {
+        // Toggle block position between left and right border
+        if (block.style.left === '0px') {
+          block.style.left = gameArea.width - block.offsetWidth - borderWidth * 2 + 'px';
+        } else {
+          block.style.left = '0px';
+        }
       }
-    });
   
-    if (canMove) {
-      verticalBlock.style.top = '0px';
-    }
-  };
+      if (block.id === 'verticalBlock') {
+        // Move vertical block to the top border
+        block.style.top = '0px';
+      }
+    };
+  });
   
   document.onmouseup = function() {
     let block = document.getElementById('verticalBlock').getBoundingClientRect();
@@ -84,6 +87,7 @@
       window.location.href = 'https://victorwxd.github.io/stop4intro';
     }
   };
+  
   </script>
 
 </body>
