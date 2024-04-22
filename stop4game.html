@@ -62,6 +62,18 @@
   
   blocks.forEach(function(block) {
     block.onclick = function(event) {
+      let canMove = true;
+      for (let i = 0; i < horizontalBlocks.length; i++) {
+        let hBlock = horizontalBlocks[i].getBoundingClientRect();
+        let vBlock = verticalBlock.getBoundingClientRect();
+        if (hBlock.bottom > vBlock.top &&
+          hBlock.top < vBlock.bottom &&
+          hBlock.left < vBlock.right &&
+          hBlock.right > vBlock.left) {
+        canMove = false;
+        break;
+        }
+      }
       if (block.classList.contains('horizontalBlock')) {
         // Toggle block position between left and right border
         if (block.style.left === '0px') {
