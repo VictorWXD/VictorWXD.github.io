@@ -57,6 +57,8 @@
   const blocks = document.querySelectorAll('.block');
   const gameArea = document.getElementById('gameArea').getBoundingClientRect();
   const borderWidth = 3;
+  let horizontalBlocksClicked = 0;
+  let totalHorizontalBlocks = document.querySelectorAll('.horizontalBlock').length;
   
   blocks.forEach(function(block) {
     block.onclick = function(event) {
@@ -67,9 +69,11 @@
         } else {
           block.style.left = '0px';
         }
+        // Increment the counter when a horizontal block is clicked
+        horizontalBlocksClicked++;
       }
   
-      if (block.id === 'verticalBlock') {
+      if (block.id === 'verticalBlock' && horizontalBlocksClicked === totalHorizontalBlocks) {
         // Move vertical block to the top border
         block.style.top = '0px';
       }
@@ -86,7 +90,7 @@
     }
   };
   
-  </script>
+</script>
 
 </body>
 </html>
