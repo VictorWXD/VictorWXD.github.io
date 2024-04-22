@@ -38,34 +38,23 @@
   var drawingArea = document.getElementById('drawingArea');
   var points = document.getElementsByClassName('point');
   var lines = [];
-  var currentLine = null;
+  var selectedPoint = null;
 
   for (var i = 0; i < points.length; i++) {
-    points[i].addEventListener('mousedown', startDrawing);
+    points[i].addEventListener('click', selectPoint);
   }
 
-  function startDrawing(e) {
-    currentLine = { from: e.target, to: null };
-    for (var i = 0; i < points.length; i++) {
-      points[i].addEventListener('mouseenter', connectPoints);
+  function selectPoint(e) {
+    if (selectedPoint) {
+      if (e.target !== selectedPoint) {
+        drawLine(selectedPoint, e.target);
+        lines.push({ from: selectedPoint, to: e.target });
+        checkCompletion();
+      }
+      selectedPoint = null;
+    } else {
+      selectedPoint = e.target;
     }
-    document.addEventListener('mouseup', stopDrawing);
-  }
-
-  function connectPoints(e) {
-    if (!currentLine.to && e.target !== currentLine.from) {
-      currentLine.to = e.target;
-      drawLine(currentLine.from, currentLine.to);
-      lines.push(currentLine);
-      checkCompletion();
-    }
-  }
-
-  function stopDrawing() {
-    for (var i = 0; i < points.length; i++) {
-      points[i].removeEventListener('mouseenter', connectPoints);
-    }
-    document.removeEventListener('mouseup', stopDrawing);
   }
 
   function drawLine(from, to) {
