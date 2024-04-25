@@ -27,16 +27,16 @@ function combineImages() {
   const files = Array.from(document.getElementById('imageUpload').files);
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  const correctNames = ['Female1.png', 'Female2.png', 'Female3.png', 'Female4.png'];
-  let imagesLoaded = 0;
+  const numImages = 4;
 
-  // check
-  if (files.length !== 4 || !files.every(file => correctNames.includes(file.name))) {
-    alert('Make sure to upload four correct images');
+  // Check if the correct number of images is uploaded
+  if (files.length !== numImages) {
+    alert('Make sure to upload four images');
     return;
   }
 
-  files.sort((a, b) => correctNames.indexOf(a.name) - correctNames.indexOf(b.name));
+  // Sort images based on their order
+  files.sort((a, b) => a.index - b.index);
 
   files.forEach((file, index) => {
     const reader = new FileReader();
@@ -44,8 +44,7 @@ function combineImages() {
       const img = new Image();
       img.onload = function() {
         ctx.drawImage(img, 0, index * 256, 1024, 256);
-        imagesLoaded++;
-        if (imagesLoaded === 4) {
+        if (index === numImages - 1) {
           const dataURL = canvas.toDataURL('image/png');
           document.getElementById('imagePreview').innerHTML = '<img src="' + dataURL + '" />';
         }
